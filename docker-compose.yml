@@ -9,9 +9,9 @@ services:
         - ./:/app/src
       ports:
         - "2137:80"
-      network:
+      networks:
           vpcbr:
-             ipv4_address: 10.10.0.
+             ipv4_address: 10.10.0.2
 
     front:
      image: wiotrek/fleet-web:stage4-56
@@ -24,6 +24,9 @@ services:
        - ./:/app/web
      ports:
        - "2138:4000"
+     networks:
+          vpcbr:
+             ipv4_address: 10.10.0.1
 
     mysql:
         image: mysql
@@ -34,6 +37,9 @@ services:
         volumes:
            - ./data/mysql:/var/lib/mysql
            - ./db-init:/docker-entrypoint-initdb.d
+        networks:
+          vpcbr:
+             ipv4_address: 10.10.0.4
 
 networks:
     vpcbr:
