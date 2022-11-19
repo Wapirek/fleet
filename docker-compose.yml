@@ -1,5 +1,30 @@
 version: "3.7"
 services:
+
+    server:
+      image: wiotrek/fleet-back:0.1
+      depends_on:
+        - mysql
+      volumes:
+        - ./:/app/src
+      ports:
+        - "2137:80"
+      network:
+          vpcbr:
+             ipv4_address: 10.10.0.
+
+    front:
+     image: wiotrek/fleet-web:stage4-56
+     depends_on:
+       - server
+       - mysql
+     environment:
+       - API_URL=192.168.1.9:2137
+     volumes:
+       - ./:/app/web
+     ports:
+       - "2138:4000"
+
     mysql:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
@@ -9,13 +34,10 @@ services:
         volumes:
            - ./data/mysql:/var/lib/mysql
            - ./db-init:/docker-entrypoint-initdb.d
-        networks:
-             vpcbr:
-                 ipv4_address: 10.10.0.4
 
 networks:
     vpcbr:
         driver: bridge
         ipam:
-           config:
-               - subnet: 10.10.0.0/16
+            config:
+              - subnet: 10.10.0.0/16
