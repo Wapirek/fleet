@@ -14,7 +14,7 @@ services:
              ipv4_address: 10.10.0.2
 
     front:
-     image: wiotrek/fleet-web:stage4-60
+     image: wiotrek/fleet-web:stage4-64
      depends_on:
        - server
        - mysql
