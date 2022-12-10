@@ -2,7 +2,7 @@ version: "3.7"
 services:
 
     server:
-      image: wiotrek/fleet-back:latest
+      image: wiotrek/fleet-back:issue32-2
       depends_on:
         - mysql
       volumes:
@@ -14,7 +14,7 @@ services:
               ipv4_address: 10.10.0.2
 
     front:
-      image: wiotrek/fleet-web:stage4-60
+      image: wiotrek/fleet-web:stage5-82
       depends_on:
         - server
         - mysql
